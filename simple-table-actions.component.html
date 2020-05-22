@@ -1,0 +1,58 @@
+<ng-container *ngIf="datosTabla?.length > 0">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="bg-white rounded">
+
+        <!-- Start tabla  -->
+        <p-table [value]="datosTabla" [paginator]="true" [rows]="10">
+
+          <!-- Start encbezado tabla -->
+          <ng-template pTemplate="header">
+            <tr>
+              <th id="" class="font-weight-bolder text-center" *ngFor="let col of cols">
+                {{col.encabezado}}
+              </th>
+              <th id="acciones" *ngIf="incluyeAcciones">
+                Acciones
+              </th>
+              <th id="accionesCotrafa" *ngIf="incluyeAcciones">
+                Acciones cotrafa
+              </th>
+            </tr>
+          </ng-template>
+          <!-- End encbezado tabla -->
+
+          <!-- Start cuerpo tabla -->
+          <ng-template pTemplate="body" let-datos>
+            <tr>
+              <td *ngFor="let col of cols">
+                {{ datos[col.campo] }}
+              </td>
+              <td *ngIf="incluyeAcciones">
+                <ng-container [ngTemplateOutlet]="actionsTemplate" [ngTemplateOutletContext]="{ $implicit: datos }"></ng-container>
+              </td>
+
+              <td *ngIf="incluyeAcciones">
+
+                <ng-container [ngTemplateOutlet]="cotrafaActionsTemplate" [ngTemplateOutletContext]="{ $implicit: datos }"></ng-container>
+
+              </td>
+            </tr>
+          </ng-template>
+          <!-- Start cuerpo tabla -->
+
+        </p-table>
+        <!-- End tabla  -->
+
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+<ng-container [ngTemplateOutlet]="formularioTemplate" [ngTemplateOutletContext]="{ $implicit: ['1', ['2']] }"></ng-container>
+
+<ng-container [ngTemplateOutlet]="cotrafaFormularioTemplate" [ngTemplateOutletContext]="{ $implicit: ['1', ['2']] }"></ng-container>
+
+
